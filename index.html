@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>D&D World Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #d1b794;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    #map {
+      height: 100%;
+      width: 100%;
+      cursor: grab;
+      background: #d1b794;
+    }
+
+    #map:active {
+      cursor: grabbing;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <!-- Leaflet -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    /* ================= MAP SETUP ================= */
+
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: -3,
+      maxZoom: 2,
+      zoomSnap: 0.25,
+      zoomControl: true,
+      attributionControl: false
+    });
+
+    /* ================= IMAGE SETTINGS ================= */
+
+    // IMPORTANT: Match these to your real image size
+    const imageUrl = 'Ameranda.jpeg';
+
+    const imageWidth = 4096;
+    const imageHeight = 3414;
+
+    const bounds = [
+      [0, 0],
+      [imageHeight, imageWidth]
+    ];
+
+    /* ================= ADD IMAGE ================= */
+
+    L.imageOverlay(imageUrl, bounds).addTo(map);
+
+    /* ================= FIT & LIMIT VIEW ================= */
+
+    // Make sure whole map fits on screen
+    map.fitBounds(bounds);
+
+    // Lock camera to map area
+    map.setMaxBounds(bounds);
+
+    // Prevent blank space when dragging
+    map.on('drag', function () {
+      map.panInsideBounds(bounds, { animate: false });
+    });
+
+    // Force correct zoom so nothing is cut off
+    map.setZoom(map.getBoundsZoom(bounds));
+
+  </script>
+
+</body>
+</html>
