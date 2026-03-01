@@ -32,7 +32,7 @@
 
   <div id="map"></div>
 
-  <!-- Leaflet -->
+  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <script>
@@ -49,11 +49,12 @@
 
     /* ================= IMAGE SETTINGS ================= */
 
-    // IMPORTANT: Match these to your real image size
-    const imageUrl = 'Ameranda.jpeg';
+    // 👇 THIS should match your uploaded file name exactly
+    const imageUrl = 'unnamed.jpg';
 
-    const imageWidth = 4096;
-    const imageHeight = 3414;
+    // ⚠️ IMPORTANT: Replace with the NEW image dimensions
+    const imageWidth = 4096;   // change if different
+    const imageHeight = 3414;  // change if different
 
     const bounds = [
       [0, 0],
@@ -66,18 +67,13 @@
 
     /* ================= FIT & LIMIT VIEW ================= */
 
-    // Make sure whole map fits on screen
     map.fitBounds(bounds);
-
-    // Lock camera to map area
     map.setMaxBounds(bounds);
 
-    // Prevent blank space when dragging
     map.on('drag', function () {
       map.panInsideBounds(bounds, { animate: false });
     });
 
-    // Force correct zoom so nothing is cut off
     map.setZoom(map.getBoundsZoom(bounds));
 
   </script>
